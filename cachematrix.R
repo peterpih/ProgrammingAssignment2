@@ -7,6 +7,10 @@
 #       v <- makeCacheMatrix(x)
 #       v_inv <- cacheSolve(v)
 #
+#       The first time cacheSolve() is run after makeCacheMatrix() the message
+#       "Generating cached matrix" will appear, it will not appear on subsequent
+#       calls to cacheSolve() until makeCacheMatrix() is called again
+#
 #
 ## Write a short comment describing this function
 #   Input:  square data matrix
@@ -37,10 +41,10 @@ makeCacheMatrix <- function(x = matrix()) {
 
 ## Write a short comment describing this function
 #
-#   This is a cached verion if R's solve() function
+#   This is a caching version if R's solve() function
 #   Called whenever the inverse matrix of the original matrix stored using makeCacheMatrix() is needed
 #   The inverted matrix is calculated the first time it's called and result is cached
-#   A cached version of the inverted matrix is then used on subsequent calls
+#   The cached version of the inverted matrix is then used on subsequent calls
 #
 #   Input:  the structure returned by makeCacheMatrix
 #   Output: the inverse of the original matrix
@@ -49,6 +53,7 @@ cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
       x_inv <- x$getinv()                            # has the inverse matrix been computed?
       if(is.null(x_inv)) {                           # non NULL indicates inverse has already been calculated
+            message("Generating cached matrix")
             x_orig <- x$get()                        # if not already calculated
             x_inv <- solve(x_orig, ...)              # compute the inverse
             x$setinv(x_inv)                          # cache it
