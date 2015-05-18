@@ -49,7 +49,7 @@ cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
       x_inv <- x$getinv()                            # has the inverse matrix been computed?
       if(is.null(x_inv)) {                           # non NULL indicates inverse has already been calculated
-            x_orig <- x$get()                        # if not
+            x_orig <- x$get()                        # if not already calculated
             x_inv <- solve(x_orig, ...)              # compute the inverse
             x$setinv(x_inv)                          # cache it
       }
